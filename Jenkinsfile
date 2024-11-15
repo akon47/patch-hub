@@ -34,23 +34,6 @@ pipeline {
             }
         }
 
-        stage('Prepare') {
-            steps {
-                echo "Pre-Processing for ${ACTIVE_PROFILE} profile"
-                script {
-
-                }
-            }
-            post {
-                success {
-                    echo 'Successfully Pre-Processing'
-                }
-                failure {
-                    error 'This pipeline stops here...'
-                }
-            }
-        }
-
         stage('Bulid Gradle') {
             steps {
                 echo 'Bulid Gradle'
