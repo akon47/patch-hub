@@ -14,10 +14,6 @@ pipeline {
         ACTIVE_PROFILE = 'prod'
         SPRING_PROD_PROPERTIES_PATH = "src/main/resources/application-${ACTIVE_PROFILE}.yml"
 
-        SPRING_DATASOURCE_URL = credentials('spring-datasource-patch-hub-url')
-        SPRING_DATASOURCE_USERNAME = credentials('spring-datasource-patch-hub-username')
-        SPRING_DATASOURCE_PASSWORD = credentials('spring-datasource-patch-hub-password')
-
         GITHUB_CREDENTIALS_ID = 'git-hub'
         DOCKER_CREDENTIALS_ID = 'docker-hub'
     }
@@ -42,12 +38,7 @@ pipeline {
             steps {
                 echo "Pre-Processing for ${ACTIVE_PROFILE} profile"
                 script {
-                    prodProperties = readFile file: SPRING_PROD_PROPERTIES_PATH
-                    prodProperties = prodProperties.replaceAll(/\{datasource-url\}/, SPRING_DATASOURCE_URL)
-                    prodProperties = prodProperties.replaceAll(/\{datasource-username\}/, SPRING_DATASOURCE_USERNAME)
-                    prodProperties = prodProperties.replaceAll(/\{datasource-password\}/, SPRING_DATASOURCE_PASSWORD)
 
-                    writeFile file: SPRING_PROD_PROPERTIES_PATH, text: prodProperties
                 }
             }
             post {
